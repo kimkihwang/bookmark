@@ -2,7 +2,7 @@
 
 {% block title %}
 Bookmark List
-{% end block %}
+{% endblock %}
 
 
 {% block content %}
@@ -24,19 +24,19 @@ Bookmark List
             {% for bookmark in object_list %}
                 <tr>
                     <t>{{forloop.counter}}</t >
-                    <td><a href="{% url 'detail' bookmark.id %}>{{bookmark.site_name}}</a></td>
+                    <td><a href="{% url 'detail' pk=bookmark.id %}">{{bookmark.site_name}}</a></td>
                     <td><a href="{{bookmark.url}}" target="_blank">{{bookmark.url}}</a></td>
                     <td><a href="{% url 'update' bookmark.id %}" class="btn btn-success btn-sm">Modify</a></td>
                     <td><a href="{% url 'delete' bookmark.id %}" class="btn btn-danger btn-sm">Delete</a></td>
                 </tr>
-            {% end for %}
+            {% endfor %}
         </tbody>
     </table>
-{% end block %}
+{% endblock %}
 
-{% block paginationn %}
+{% block pagination %}
     {% if is_paginated %}
-        < class="pagination justify-cocntent-center pagination-sm">
+        <ul class="pagination justify-content-center pagination-sm">
             {% if page_obj.has_previous %}
                 <li class="page-item">
                     <a class="page-link" href="{% url 'list' %}?page={{page_obj.previous_page_number}}">Previous</a>
@@ -48,13 +48,13 @@ Bookmark List
             {% endif %}
 
             {% for object in page_obj.paginator.page_range %}
-                <li class="page-item" {% if page_obj.number == forloop.counter %}disabled{% end if %}>
-                    <a class="page-link" href="{% url 'list' %}?page={{forloop.counter}}>{{forloop.counter}}</a>
-            {% end for %}
+                <li class="page-item {% if page_obj.number == forloop.counter %}disabled{% endif %}">
+                    <a class="page-link" href="{% url 'list' %}?page={{forloop.counter}}">{{forloop.counter}}</a>
+            {% endfor %}
 
-            {% if page_ob.has_next %}
+            {% if page_obj.has_next %}
                  <li class="page-item">
-                    <a class="page-link" href="{% url 'list' %}?page={{page_obj.previous_page_number}}">Next</a>
+                    <a class="page-link" href="{% url 'list' %}?page={{page_obj.next_page_number}}">Next</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
@@ -62,5 +62,7 @@ Bookmark List
                 </li>
             {% endif %}
         </ul>
-{% end block %}
+    {% endif %}
+{% endblock %}
+
 
